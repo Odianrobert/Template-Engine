@@ -36,7 +36,7 @@ function appMenu() {
                 //use regex for value ranges, must search for numbers only, use for engineer and intern
                 validate: answer => {
                     const pass = answer.match (
-                        /^[1-9]\d*$/
+                        /^[1-9]/
                     );
                     if (pass){
                         return true;
@@ -66,7 +66,7 @@ function appMenu() {
                 //similar to id number, need to check that a between 1-9 is used
                 validate: answer => {
                     const pass = answer.match(
-                      /^[1-9]\d*$/
+                      /^[1-9]/
                     );
                     if (pass) {
                       return true;
@@ -127,7 +127,7 @@ function appMenu() {
                 message: "What is your engineer's ID number?",
                 validate: answer => {
                     const pass = answer.match (
-                        /^[1-9]\d*$/
+                        /^[1-9]/
                     );
                     if (pass){
                         return true;
