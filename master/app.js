@@ -26,7 +26,7 @@ function appMenu() {
                     if(answer !== "") {
                         return true;
                     }
-                    return "You must enter at least one letter.";
+                    return "You must enter at least one character.";
                 }
             },
             {
@@ -118,7 +118,7 @@ function appMenu() {
                     if(answer !== "") {
                         return true;
                     }
-                    return "You must enter at least one letter.";
+                    return "You must enter at least one character.";
                 }
             },
             {
@@ -177,7 +177,7 @@ function appMenu() {
                     if(answer !== "") {
                         return true;
                     }
-                    return "You must enter at least one letter.";
+                    return "You must enter at least one character.";
                 }
             },
             {
