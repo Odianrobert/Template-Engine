@@ -31,16 +31,14 @@
     <div class="card card-image" style="width: 18rem;">
         <div class="card-body">
             <image class="manicon" src = "Assets\2135.1-engineer-icon-iconbunny.jpg"></image><br>
-            <h4 class="card-title">Eric</h4>
+            <h4 class="card-title">{$answers.engineerName ?answers.engineerName: " "}</h4>
             <h5 class="card-subtitle mb-2 text-muted">Engineer</h5>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">ID #: 25</li>
+          <li class="list-group-item">${answers.engineerId ?answers.engineerId: " "}</li>
+          <li class="list-group-item">${answers.engineerGithub ?answers.engineerGithub: " "}</li>
+          <li class="list-group-item">${answers.engineerEmail ?answers.engineerEmail: " "}</li>
         </ul>
-        <div class="card-body">
-            <a href="#" class="btn btn-primary">Email</a>
-            <a href="#" class="btn btn-primary">GitHub</a>
-        </div>
       </div>
 </body>
 </html>

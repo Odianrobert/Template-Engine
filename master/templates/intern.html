@@ -31,16 +31,14 @@
     <div class="card card-image" style="width: 18rem;">
         <div class="card-body">
             <image class="manicon" src = "Assets\images.png"></image><br>
-            <h4 class="card-title">Jacob</h4>
+            <h4 class="card-title">${answers.internName ?answers.internName: " "}</h4>
             <h5 class="card-subtitle mb-2 text-muted">Intern</h5>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">ID #: 35</li>
-          <li class="list-group-item">College/University: Case Western</li>
+          <li class="list-group-item">${answers.internId ?answers.internId: " "}</li>
+          <li class="list-group-item">${answers.internSchool ?answers.internSchool: " "}</li>
+          <li class="list-group-item">${answers.internEmail ?answers.internEmail: " "}</li>
         </ul>
-        <div class="card-body">
-            <a href="#" class="btn btn-primary">Email</a>
-        </div>
       </div>
 </body>
 </html>
