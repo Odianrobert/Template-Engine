@@ -9,13 +9,16 @@ const outputPath = path.resolve(__dirname, "output", "team.html");
 //need to make folder "output to store rendered html"
 const render = require("./library/htmlrender");//html framework for rendered html 
 
-const teamMembers = [];
+const managerArray = [];
+const engineerArray = [];
+const internArray = [];
 const idArray = [];
 
-function appMenu() {
+
+
 //run create manager 1st
 //validate if then "" can copy and paste to engineer and intern
-    function createManager () {
+const createManager = () => {
         console.log("Lets build your team");
         inquirer.prompt ([
             {
@@ -74,14 +77,15 @@ function appMenu() {
                     return "Please enter a number greater than zero.";
                   }
             } 
-        ]).then(answers => {
+        ]).then(function({managerName, managerId, managerEmail, managerPhoneNumber}) {
             // Make new class 'Manager' with info provided by user answer
-            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerPhoneNumber);
-            teamMembers.push(manager);
-            idArray.push(answers.managerId);
+            const manager = new Manager(managerName, managerId, managerEmail, managerPhoneNumber);
+            managerArray.push(manager)
             createTeam();
         }); 
     }
+
+    createManager()
     //give user choices of what type of team member to add next, choices go in an array
     function createTeam() {
         inquirer.prompt ([
@@ -104,7 +108,7 @@ function appMenu() {
                     addIntern();
                     break;
                 default:
-                    buildTeam();   
+                    buildTeam(managerArray, engineerArray, internArray);   
             }
         })
     }
@@ -160,10 +164,9 @@ function appMenu() {
                     return "Please enter a valid email address.";
                   }
             }
-        ]).then(answers => {
-            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerGithub, answers.engineerEmail);
-            teamMembers.push(engineer);
-            idArray.push(answers.engineerId);
+        ]).then(function({engineerName, engineerId, engineerEmail, engineerGithub}) { 
+            const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub );
+            engineerArray.push(engineer);
             createTeam();
         })
     }
@@ -228,22 +231,40 @@ function appMenu() {
                       return "Please enter a positive number greater than zero.";
                     }
             }
-        ]).then(answers => {
-        const intern = new Intern(answers.internName, answers.internId, answers.internSchool, answers.internEmail);
-        teamMembers.push(intern);
+        ]).then(function({internName, internId, internSchool, internEmail}){
+        const intern = new Intern(internName, internId, internSchool, internEmail);
         idArray.push(answers.internId);
+        internArray.push(intern);
+        // teamMembers.push(intern); => had this same code for all types of employees, had to redo them
+        
         createTeam();
     });
-}
+    }
+    
 
-    function buildTeam() {
-        fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
-      }
 
-    createManager();
+    // function buildTeam() {
+    //     fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+    //   }
 
-}
+    // createManager();
+    // async function init() {
+    //     console.log("hi")
+    //     try {
+    //         const answers = await appMenu();
+      
+    //         const html = generateHTML(answers);
+    //       //writeFile will creat html page with the answers
+    //         await writeFileAsync("main.html", html);
+      
+    //         console.log("Successfully wrote to main.html");
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    //    }
+    // init()
 
-appMenu();
+
+
     
     
