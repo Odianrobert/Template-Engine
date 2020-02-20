@@ -5,9 +5,9 @@ const Manager = require("./library/Manager");//make sure path is correct
 const Engineer = require("./library/Engineer");
 const Intern = require("./library/Intern");
 //install jest npm i jest to run tests
-const outputPath = path.resolve(__dirname, "output", "team.html");
+// const outputPath = path.resolve(__dirname, "output", "main.html");
 //need to make folder "output to store rendered html"
-const render = require("./library/htmlrender");//html framework for rendered html 
+const generateHTML = require("./library/htmlrender")
 
 const managerArray = [];
 const engineerArray = [];
@@ -233,12 +233,27 @@ const createManager = () => {
             }
         ]).then(function({internName, internId, internSchool, internEmail}){
         const intern = new Intern(internName, internId, internSchool, internEmail);
-        idArray.push(answers.internId);
+        idArray.push(internId);
         internArray.push(intern);
         // teamMembers.push(intern); => had this same code for all types of employees, had to redo them
         
         createTeam();
-    });
+
+    }).then( async function() {
+        console.log("hi")
+        try {
+            const answers = await buildTeam();
+      
+            const html = generateHTML(answers);
+          //writeFile will create html page with the answers
+            await writeFileAsync("main.html", html);
+      
+            console.log("Successfully wrote to main.html");
+        } catch (err) {
+            console.log(err);
+        }
+       })
+
     }
     
 
@@ -248,7 +263,7 @@ const createManager = () => {
     //   }
 
     // createManager();
-    // async function init() {
+    // async function render() {
     //     console.log("hi")
     //     try {
     //         const answers = await appMenu();
@@ -262,7 +277,7 @@ const createManager = () => {
     //         console.log(err);
     //     }
     //    }
-    // init()
+    // render()
 
 
 
