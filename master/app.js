@@ -5,13 +5,12 @@ const Manager = require("./library/Manager");//make sure path is correct
 const Engineer = require("./library/Engineer");
 const Intern = require("./library/Intern");
 //install jest npm i jest to run tests
-// const outputPath = path.resolve(__dirname, "output", "main.html");
+ const outputPath = path.resolve(__dirname, "output", "main.html");
+ 
 //need to make folder "output to store rendered html"
-const generateHTML = require("./library/htmlrender")
+const render = require("./library/htmlrender");
 
-const managerArray = [];
-const engineerArray = [];
-const internArray = [];
+const myTeam = [];
 const idArray = [];
 
 
@@ -64,23 +63,23 @@ const createManager = () => {
             },
             {
                 type: "input",
-                name: "managerPhoneNumber",
-                message: "What is your manager's phone number?",
-                //similar to id number, need to check that a between 1-9 is used
+                name: "managerOfficeNumber",
+                message: "What is your manager's office number?",
                 validate: answer => {
-                    const pass = answer.match(
-                      /^[1-9]/
-                    );
-                    if (pass) {
-                      return true;
-                    }
-                    return "Please enter a number greater than zero.";
+                  const pass = answer.match(
+                    /^[1-9]\d*$/
+                  );
+                  if (pass) {
+                    return true;
                   }
-            } 
-        ]).then(function({managerName, managerId, managerEmail, managerPhoneNumber}) {
+                  return "Please enter a positive number greater than zero.";
+                }
+              }
+        ]).then(answers => {
             // Make new class 'Manager' with info provided by user answer
-            const manager = new Manager(managerName, managerId, managerEmail, managerPhoneNumber);
-            managerArray.push(manager)
+            const manager = new Manager(answers.managerName, answers.managerId, answers.managerEmail, answers.managerOfficeNumber);
+            myTeam.push(manager);
+            idArray.push(answers.managerId);
             createTeam();
         }); 
     }
@@ -107,8 +106,9 @@ const createManager = () => {
                 case "Intern":
                     addIntern();
                     break;
-                default:
-                    buildTeam(managerArray, engineerArray, internArray);   
+                case "I do not choose to add any more team members":
+                    // buildTeam(managerArray, engineerArray, internArray);
+                    buildTeam();
             }
         })
     }
@@ -164,9 +164,10 @@ const createManager = () => {
                     return "Please enter a valid email address.";
                   }
             }
-        ]).then(function({engineerName, engineerId, engineerEmail, engineerGithub}) { 
-            const engineer = new Engineer(engineerName, engineerId, engineerEmail, engineerGithub );
-            engineerArray.push(engineer);
+        ]).then(answers =>  { 
+            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub );
+            myTeam.push(engineer);
+            idArray.push(answers.engineerId);
             createTeam();
         })
     }
@@ -219,47 +220,49 @@ const createManager = () => {
                 message: "What is your intern's email address?",
                 validate: answer => {
                     const pass = answer.match(
-                      /\S+@\S+\.\S+/
-                    );
-                    if (pass) {
-                        if (idArray.includes(answer)) {
-                          return "This ID is taken, please use another ID number.";
-                        } else {
-                          return true;
-                        }             
+                        /\S+@\S+\.\S+/
+                      );
+                      if (pass) {
+                        return true;
                       }
-                      return "Please enter a positive number greater than zero.";
+                      return "Please enter a valid email address.";
                     }
             }
-        ]).then(function({internName, internId, internSchool, internEmail}){
-        const intern = new Intern(internName, internId, internSchool, internEmail);
-        idArray.push(internId);
-        internArray.push(intern);
+        ]).then(answers => {
+        const intern = new Intern(answers.internName, answers.internId, answers.internSchool, answers.internEmail);
+        myTeam.push(intern);
+        idArray.push(answers.internId);
         // teamMembers.push(intern); => had this same code for all types of employees, had to redo them
         
         createTeam();
 
-    }).then( async function() {
-        console.log("hi")
-        try {
-            const answers = await buildTeam();
-      
-            const html = generateHTML(answers);
-          //writeFile will create html page with the answers
-            await writeFileAsync("main.html", html);
-      
-            console.log("Successfully wrote to main.html");
-        } catch (err) {
-            console.log(err);
-        }
-       })
-
+    })
+    
     }
     
+    function buildTeam() {
+        fs.writeFileSync(outputPath, render(myTeam), "utf-8");
+      }
+    // async function teamHtml() {
+    //     // console.log("hi")
+    //     try {
+    //         const answers = await createTeam();
+      
+    //         const html = generateHTML(answers);
+    //       //writeFile will create html page with the answers
+    //         await writeFileAsync("main.html", html);
+      
+    //         console.log("Successfully wrote to main.html");
+    //     } catch (err) {
+    //         console.log(err);
+    //     }
+    //    }
+    // app.get("/", function(req,res){
+    //     res.render("filename", {data})
+    // })
 
-
-    // function buildTeam() {
-    //     fs.writeFileSync(outputPath, render(teamMembers), "utf-8");
+    // function buildTeam(manager, engineer,intern) {
+    //     fs.writeFileSync("./library/htmlrender.js", {manager, engineer,intern});
     //   }
 
     // createManager();

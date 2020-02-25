@@ -30,14 +30,14 @@
 <body>
     <div class="card card-image" style="width: 18rem;">
         <div class="card-body">
-            <image class="manicon" src = "Assets\download.png"></image><br>
-            <h4 class="card-title">${managerName}</h4>
-            <h5 class="card-subtitle mb-2 text-muted">Manager </h5>
+            <image class="manicon" src = "./Assets/manager.png"></image><br>
+            <h4 class="card-title">{{ name }}</h4>
+            <h5 class="card-subtitle mb-2 text-muted">{{ role }}</h5>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">${managerId ?managerId : " "}</li>
-          <li class="list-group-item">${managerPhoneNumber ?managerPhoneNumber: " "}</li>
-          <li class="list-group-item">${managerEmail ?managerEmail: " "}</li>
+          <li class="list-group-item">ID: {{ id }}</li>
+          <li class="list-group-item">Email: <a href="mailto:{{ email }}">{{ email }}</a></li>
+          <li class="list-group-item">Office number: {{ officeNumber }}</li>
         </ul>
       </div>
 </body>

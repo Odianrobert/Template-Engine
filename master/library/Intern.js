@@ -10,9 +10,9 @@ class Intern extends Employee {
         return "Intern";
     }
 
-    getinternSchool() {
-        return this.internSchool;
-    }
+    getSchool() {
+        return this.school;
+      }
 }
 
 module.exports = Intern
