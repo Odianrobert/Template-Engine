@@ -205,17 +205,6 @@ const createManager = () => {
             },
             {
                 type: "input",
-                name: "internSchool",
-                message: "What school is your intern enrolled at?",
-                validate: answer => {
-                    if(answer !== "") {
-                        return true;
-                    }
-                    return "You must enter at least one character.";
-                }
-            },
-            {
-                type: "input",
                 name: "internEmail",
                 message: "What is your intern's email address?",
                 validate: answer => {
@@ -227,9 +216,21 @@ const createManager = () => {
                       }
                       return "Please enter a valid email address.";
                     }
-            }
+            },
+            {
+                type: "input",
+                name: "internSchool",
+                message: "What school is your intern enrolled at?",
+                validate: answer => {
+                    if(answer !== "") {
+                        return true;
+                    }
+                    return "You must enter at least one character.";
+                }
+            },
+            
         ]).then(answers => {
-        const intern = new Intern(answers.internName, answers.internId, answers.internSchool, answers.internEmail);
+        const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
         myTeam.push(intern);
         idArray.push(answers.internId);
         // teamMembers.push(intern); => had this same code for all types of employees, had to redo them
