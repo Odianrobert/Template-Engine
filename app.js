@@ -1,14 +1,14 @@
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-const Manager = require("./library/Manager");//make sure path is correct
-const Engineer = require("./library/Engineer");
-const Intern = require("./library/Intern");
+const Manager = require("./lib/Manager");//make sure path is correct
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
 //install jest npm i jest to run tests
- const outputPath = path.resolve(__dirname, "output", "main.html");
+ const outputPath = path.resolve(__dirname, "output", "employee.html");
  
 //need to make folder "output to store rendered html"
-const render = require("./library/htmlrender");
+const render = require("./lib/htmlrender");
 
 const myTeam = [];
 const idArray = [];
